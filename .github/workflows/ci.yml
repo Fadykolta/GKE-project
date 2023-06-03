@@ -26,10 +26,13 @@ jobs:
       - name: Get latest tag
         id: get_latest_tag
         run: |
-          TAG="fadydevops/gke-temp:v0.1"
-          while docker pull $DOCKER_REPOSITORY:$TAG >/dev/null 2>&1; do
-            TAG=$(echo $TAG + 0.1 | bc)
-          done
+          LAST_TAG=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep "$DOCKER_REPOSITORY:v0." | sort -V | tail -n1)
+          if [[ -z "$LAST_TAG" ]]; then
+            TAG="v0.1"
+          else
+            LAST_VERSION=$(echo "$LAST_TAG" | cut -d ':' -f 2)
+            TAG=$(echo "v$LAST_VERSION + 0.1" | bc)
+          fi
           echo "::set-output name=tag::$TAG"
 
       - name: Build and push Docker image
