@@ -39,5 +39,5 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.increment_tag.outputs.tag }}
         run: |
-          docker build -t your-docker-repo/gke-temp:${IMAGE_TAG} .
-          docker push your-docker-repo/gke-temp:${IMAGE_TAG}
+          docker build -t fadydevops/gke-temp:${IMAGE_TAG} .
+          docker push fadydevops/gke-temp:${IMAGE_TAG}
