@@ -20,3 +20,4 @@ spec:
           image: fadydevops/gke-temp:v0.1
           ports:
             - containerPort: 8080
+            
