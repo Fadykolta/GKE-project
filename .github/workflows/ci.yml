@@ -7,7 +7,7 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_REPOSITORY: your-dockerhub-username/your-dockerhub-repo
+  DOCKER_REPOSITORY: fadydevops/gke-temp
 
 jobs:
   build_and_push:
