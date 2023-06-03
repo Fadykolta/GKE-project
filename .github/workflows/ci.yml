@@ -26,7 +26,7 @@ jobs:
       - name: Get latest tag
         id: get_latest_tag
         run: |
-          TAG="v0.1"
+          TAG="fadydevops/gke-temp:v0.1"
           while docker pull $DOCKER_REPOSITORY:$TAG >/dev/null 2>&1; do
             TAG=$(echo $TAG + 0.1 | bc)
           done
