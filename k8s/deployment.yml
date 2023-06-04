@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: nginx-app
-  replicas: 1
+  replicas: 4
   template:
     metadata:
       labels:
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: nginx-app-john
-          image: fadydevops/gke-temp:v0.9
+          image: fadydevops/gke-temp:v0.10
           ports:
             - containerPort: 8080
