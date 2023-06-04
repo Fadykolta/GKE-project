@@ -1,2 +1,0 @@
-this file is created inside container
-this file is created outside container
