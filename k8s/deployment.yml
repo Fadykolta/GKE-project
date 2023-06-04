@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: nginx-app-john
-          image: fadydevops/gke-temp:v0.11
+          image: fadydevops/gke-temp:v0.12
           ports:
             - containerPort: 8080
