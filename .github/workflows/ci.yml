@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and push Docker image
         env:
-          IMAGE_TAG: v0.8
+          IMAGE_TAG: v0.9
         run: |
           docker build -t fadydevops/gke-temp:${IMAGE_TAG} .
           docker push fadydevops/gke-temp:${IMAGE_TAG}
