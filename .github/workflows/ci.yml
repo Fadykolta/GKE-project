@@ -31,10 +31,9 @@ jobs:
 
       - name: Update Image Tag
         run: |
-          sed -i 's,fadydevops/gke-temp:.*,fadydevops/gke-temp:,' deployment.yml
+          sed -i 's,fadydevops/gke-temp:.*,fadydevops/gke-temp:${IMAGE_TAG},' deployment.yml
           git add k8s/deployment.yaml
           git config user.email "ci-bot@argocd.com"
           git config user.name "ci-bot"
           git commit -m "Update image tag in deployment.yaml [skip ci]"
           git push
-          
