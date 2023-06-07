@@ -28,3 +28,12 @@ jobs:
         run: |
           docker build -t fadydevops/gke-temp:${IMAGE_TAG} .
           docker push fadydevops/gke-temp:${IMAGE_TAG}
+
+      - name: Update Image Tag
+        run: |
+          sed -i "s,fadydevops/gke-temp:.*,fadydevops/gke-temp:${{ env.IMAGE_TAG }}," k8s/deployment.yaml
+          git add k8s/deployment.yaml
+          git config user.email "ci-bot@argocd.com"
+          git config user.name "ci-bot"
+          git commit -m "Update image tag in deployment.yaml [skip ci]"
+          git push
