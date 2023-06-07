@@ -5,15 +5,18 @@ on:
     branches:
       - main
 
+env:
+  DOCKER_REPO: fadydevops/gke-temp
+
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Login to Docker Hub
@@ -23,17 +26,20 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        env:
-          IMAGE_TAG: v0.12
-        run: |
-          docker build -t fadydevops/gke-temp:${IMAGE_TAG} .
-          docker push fadydevops/gke-temp:${IMAGE_TAG}
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ env.DOCKER_REPO }}:${{ github.sha }}
 
-      - name: Update Image Tag
+      - name: Update deployment.yml
         run: |
-          sed -i 's,fadydevops/gke-temp:.*,fadydevops/gke-temp:${IMAGE_TAG},' deployment.yml
-          git add k8s/deployment.yaml
-          git config user.email "ci-bot@argocd.com"
-          git config user.name "ci-bot"
-          git commit -m "Update image tag in deployment.yaml [skip ci]"
+          sed -i "s/image: fadydevops\/gke-temp:.*/image: ${DOCKER_REPO}:${{ github.sha }}/g" k8s/deployment.yml
+          
+      - name: Commit and push updated deployment.yml
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add k8s/deployment.yml
+          git commit -m "Update deployment.yml with new image tag"
           git push
