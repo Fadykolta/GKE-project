@@ -31,7 +31,7 @@ jobs:
 
       - name: Update Image Tag
         run: |
-          sed -i 's,***\/GKE-temp:.*,***\/gke-temp:,' deployment.yml
+          sed -i 's,***\/GKE-temp:.*,***\/GKE-temp:,' deployment.yml
           git add k8s/deployment.yaml
           git config user.email "ci-bot@argocd.com"
           git config user.name "ci-bot"
