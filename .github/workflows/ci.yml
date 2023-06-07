@@ -34,7 +34,7 @@ jobs:
 
       - name: Update deployment.yml
         run: |
-          sed -i "s/image: fadydevops\/gke-temp:.*/image: ${DOCKER_REPO}:${{ github.sha }}/g" k8s/deployment.yml
+        sed -i "s@image: .*/gke-temp:.*@image: ${DOCKER_REPO}:${{ github.sha }}@g" k8s/deployment.yml
           
       - name: Commit and push updated deployment.yml
         run: |
